@@ -8,10 +8,7 @@ function App() {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(
         tabs[0].id,
-        { type: "GET_HTML" },
-        (response) => {
-          console.log(response.html);
-        }
+        { type: "GET_HTML" }
       );
     });
   };
