@@ -48,7 +48,7 @@ function scheduleTimeout() {
 // }
 
 async function sendHtml(html, url) {
-  const endpoint = "https://localhost:8000";
+  const endpoint = "http://localhost:8000";
 
   try {
     const response = await fetch(endpoint, {
