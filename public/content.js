@@ -6,7 +6,7 @@ let timeoutId = null;
 function getHtml() {
   const html = document.documentElement.outerHTML;
   console.log("HTML received:", html);
-  // sendHtml(html, window.location.href);
+  sendHtml(html, window.location.href);
 }
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
