@@ -34,7 +34,7 @@ function scheduleTimeout() {
 
 async function sendHtml(html, url) {
   console.log("test");
-  const endpoint = "localhost:8000"
+  const endpoint = "https://localhost:8000"
   try {
     const response = await axios.post(endpoint, html, {
       headers: {
