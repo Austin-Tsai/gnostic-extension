@@ -59,7 +59,7 @@ function App() {
         
         <div className="useML">
           <label for="useML">Use ML Keywords</label>
-          <input type="checkbox" name="useML" value={useML} onChange={() => setUseML(!useML)} />
+          <input type="checkbox" name="useML" checked={useML} onChange={() => setUseML(!useML)} />
         </div>
         
         <div className="save">

@@ -3,15 +3,16 @@
 let waitTime = 100;
 let timeoutId = null;
 
-function getHtml() {
+function getHtml(useML) {
   const html = document.documentElement.outerHTML;
   console.log("HTML received:", html);
-  sendHtml(html, window.location.href);
+  console.log(useML)
+  sendHtml(html, window.location.href, useML);
 }
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === "GET_HTML") {
-    getHtml()
+    getHtml(msg.useML)
     // const html = document.documentElement.outerHTML;
     // console.log(html)
     // sendResponse({ html });
@@ -47,7 +48,7 @@ function scheduleTimeout() {
 //   }
 // }
 
-async function sendHtml(html, url) {
+async function sendHtml(html, url, useML) {
   const endpoint = "http://localhost:8000";
 
   try {
@@ -55,7 +56,8 @@ async function sendHtml(html, url) {
       method: "POST",
       headers: {
         "Content-Type": "text/plain",
-        "url": url
+        "url": url,
+        "useML": (useML ? "True" : "False")
       },
       body: html
     });

@@ -6,6 +6,15 @@
 
   display: flex;
   flex: 1;
+  background-color: rgb(112, 112, 112);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.outlined-white, label{
+    color: #ffffff;
+    text-shadow: -1px -1px 0 #000000, 0 -1px 0 #000000, 1px -1px 0 #000000, 1px 0 0 #000000,
+    1px 1px 0 #000000, 0 1px 0 #000000, -1px 1px 0 #000000, -1px 0 0 #000000;
 }
 
 .container {
@@ -46,5 +55,22 @@ button:hover, input:hover {
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 5px rgba(154, 153, 189, 0.5);
+}
+
+.useML {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+button:active {
+  transform: scale(0.97);
 }
