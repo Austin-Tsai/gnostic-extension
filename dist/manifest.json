@@ -6,7 +6,10 @@
     "action": {
         "default_popup": "index.html"
     },
-    "host_permissions": ["<all_urls>"],
+    "host_permissions": [
+      "<all_urls>",
+      "http://localhost:8000/*"
+    ],
     "permissions": [
         "storage",
         "activeTab",
