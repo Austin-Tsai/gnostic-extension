@@ -3,12 +3,16 @@ import './App.css'
 
 function App() {
   const [waitTime, setWaitTime] = useState(10);
+  const [useML, setUseML] = useState(true);
 
   const getHtml = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(
         tabs[0].id,
-        { type: "GET_HTML" }
+        { 
+          type: "GET_HTML",
+          useML: useML
+        }
       );
     });
   };
@@ -52,8 +56,13 @@ function App() {
           }}>
           </input>
         </div>
-
-        <div className="submit">
+        
+        <div className="useML">
+          <label for="useML">Use ML Keywords</label>
+          <input type="checkbox" name="useML" value={useML} onChange={() => setUseML(!useML)} />
+        </div>
+        
+        <div className="save">
           {/* <label id="save-label">Save Settings</label> */}
           <button onClick={saveSettings} aria-labelledby="save-label">Save Settings</button>
         </div>

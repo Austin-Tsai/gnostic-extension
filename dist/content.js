@@ -1,1 +1,72 @@
-let i=100,o=null;function s(){const e=document.documentElement.outerHTML;console.log("HTML received:",e),l(e,window.location.href)}chrome.runtime.onMessage.addListener((e,n,r)=>(e.type==="GET_HTML"&&s(),!0));chrome.storage.local.get(["waitTime"],e=>{e.waitTime&&(i=Number(e.waitTime)),c()});function c(){o&&clearTimeout(o),o=setTimeout(()=>{s()},i*1e3)}async function l(e,n){const r="http://localhost:8000";try{const t=await fetch(r,{method:"POST",headers:{"Content-Type":"text/plain",url:n},body:e});if(!t.ok)throw new Error(`HTTP error! Status: ${t.status}`);const a=await t.text();console.log(a)}catch(t){console.error("Error sending data:",t)}}
+// import axios from "axios"
+
+let waitTime = 100;
+let timeoutId = null;
+
+function getHtml() {
+  const html = document.documentElement.outerHTML;
+  console.log("HTML received:", html);
+  sendHtml(html, window.location.href);
+}
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.type === "GET_HTML") {
+    getHtml()
+    // const html = document.documentElement.outerHTML;
+    // console.log(html)
+    // sendResponse({ html });
+  }
+  return true;
+});
+
+chrome.storage.local.get(["waitTime"], (saved) => {
+  if (saved.waitTime) waitTime = Number(saved.waitTime);
+  scheduleTimeout();
+});
+
+function scheduleTimeout() {
+  if (timeoutId) clearTimeout(timeoutId);
+
+  timeoutId = setTimeout(() => {
+    getHtml();
+  }, waitTime * 1000);
+}
+
+// async function sendHtml(html, url) {
+//   const endpoint = "http://localhost:8000"
+//   try {
+//     const response = await axios.post(endpoint, html, {
+//       headers: {
+//         'Content-Type': 'text/plain',
+//         'url': url,
+//       }
+//     });
+//     console.log(response.data);
+//   } catch (error) {
+//     console.error('Error sending data:', error);
+//   }
+// }
+
+async function sendHtml(html, url) {
+  const endpoint = "http://localhost:8000";
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain",
+        "url": url
+      },
+      body: html
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.text(); // or response.json() if server returns JSON
+    console.log(data);
+  } catch (error) {
+    console.error("Error sending data:", error);
+  }
+}
