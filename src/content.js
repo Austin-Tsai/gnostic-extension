@@ -32,17 +32,41 @@ function scheduleTimeout() {
   }, waitTime * 1000);
 }
 
+// async function sendHtml(html, url) {
+//   const endpoint = "http://localhost:8000"
+//   try {
+//     const response = await axios.post(endpoint, html, {
+//       headers: {
+//         'Content-Type': 'text/plain',
+//         'url': url,
+//       }
+//     });
+//     console.log(response.data);
+//   } catch (error) {
+//     console.error('Error sending data:', error);
+//   }
+// }
+
 async function sendHtml(html, url) {
-  const endpoint = "http://localhost:8000"
+  const endpoint = "https://localhost:8000";
+
   try {
-    const response = await axios.post(endpoint, html, {
+    const response = await fetch(endpoint, {
+      method: "POST",
       headers: {
-        'Content-Type': 'text/plain',
-        'url': url,
-      }
+        "Content-Type": "text/plain",
+        "url": url
+      },
+      body: html
     });
-    console.log(response.data);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.text(); // or response.json() if server returns JSON
+    console.log(data);
   } catch (error) {
-    console.error('Error sending data:', error);
+    console.error("Error sending data:", error);
   }
 }
