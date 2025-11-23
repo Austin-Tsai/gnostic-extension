@@ -32,7 +32,7 @@ function scheduleTimeout() {
   }, waitTime * 1000);
 }
 
-async function sendData(html, url) {
+async function sendHtml(html, url) {
   const endpoint = "http://localhost:8000"
   try {
     const response = await axios.post(endpoint, html, {
